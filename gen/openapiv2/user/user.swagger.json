@@ -1,0 +1,94 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "user/user.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "UserService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "userCreateUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/userUser",
+          "description": "Represents the newly created user."
+        }
+      },
+      "description": "CreateUserResponse is the response message for the CreateUser RPC."
+    },
+    "userGetUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/userUser",
+          "description": "Represents the retrieved user."
+        }
+      },
+      "description": "GetUserResponse is the response message for the GetUser RPC."
+    },
+    "userUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "User id. The id must be uuid.\nExample: \"123e4567-e89b-12d3-a456-426655440000\"",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email of the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the user was created.",
+          "readOnly": true
+        }
+      },
+      "description": "User represents a user entity."
+    }
+  }
+}
