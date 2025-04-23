@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package user;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/maetad/backend-challenge-proto/proto-gen-go/user;user";
+
+// The UserService service defines a set of RPC methods for managing users.
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+
+  // GetUser retrieves a specific user by its ID.
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+}
+
+// CreateUserRequest is the request message for the CreateUser RPC.
+message CreateUserRequest {
+  // Represents the user to be created.
+  User user = 1;
+
+  // Represents the user's password.
+  string password = 2 [
+    (buf.validate.field).string.min_len = 1
+  ];
+}
+
+// CreateUserResponse is the response message for the CreateUser RPC.
+message CreateUserResponse {
+  // Represents the newly created user.
+  User user = 1;
+}
+
+// GetUserRequest is the request message for the GetUser RPC.
+message GetUserRequest {
+  // User id. The id must be uuid.
+  // Example: "123e4567-e89b-12d3-a456-426655440000"
+  string id = 1;
+}
+
+// GetUserResponse is the response message for the GetUser RPC.
+message GetUserResponse {
+  // Represents the retrieved user.
+  User user = 1;
+}
+
+// User represents a user entity.
+message User {
+  // User id. The id must be uuid.
+  // Example: "123e4567-e89b-12d3-a456-426655440000"
+  string id = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The name of the user.
+  string name = 2[
+    (buf.validate.field).string.min_len = 1
+  ];
+
+  // The email of the user.
+  string email = 3 [
+    (buf.validate.field).string.email = true
+  ];
+
+  // The timestamp when the user was created.
+  google.protobuf.Timestamp created_at = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
